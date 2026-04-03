@@ -45,7 +45,7 @@ dispatch(addtowish(item))
       {filterdata.slice(0, visible).map((item) => (
         <div className="product-card" key={item.id}>
           <h4>{item.title}</h4>
-
+{/* console.log("hello") */}
           <Link to={`/detail/${item.id}`}>
             <img src={item.thumbnail} alt={item.title} />
           </Link>
