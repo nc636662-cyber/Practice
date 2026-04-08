@@ -32,7 +32,6 @@ const Navbar = () => {
         </span>
       </Link>
 
-      {/* Navigation Links */}
       <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 mt-2 md:mt-0">
         <Link to="/" className={navLinkClass}>
         Home
@@ -43,9 +42,9 @@ const Navbar = () => {
         <Link to="/Product" className={navLinkClass}>
           Product
         </Link>
-        {/* <Link to="/Cart" className={navLinkClass}>
+        <Link to="/Cart" className={navLinkClass}>
         Cart
-        </Link> */}
+        </Link>
 
 
         {currentUser ? (
@@ -87,13 +86,6 @@ const Navbar = () => {
   </Link>
 
   <Link 
-    to="/Orders" 
-    className="px-4 py-2 rounded-md hover:bg-gray-100 transition"
-  >
-    My Orders
-  </Link>
-
-  <Link 
     to="/wishlist" 
     className="px-4 py-2 rounded-md hover:bg-gray-100 transition"
   >
@@ -105,7 +97,7 @@ const Navbar = () => {
   >
     My Cart
   </Link>
-
+  
 </div>
 )}
     </nav>
