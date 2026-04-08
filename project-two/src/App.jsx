@@ -11,7 +11,6 @@ import ProtectRouting from "./Protect";
 import Cart from "./components/Cart";
 import CounterState from "./Use";
 import Wishlist from "./components/Wishlist";
-import Orders from "./components/Orders";
 import Profile from "./components/Profile";
 const App = () => {
   return (
@@ -27,9 +26,7 @@ const App = () => {
       <Route path="/Cart" element={<Cart/>}/>
       <Route path="/count" element={<CounterState/>}/>
       <Route path="/Wishlist" element={<Wishlist/>}/>
-      <Route path="/Orders" element={<Orders/>}/>
       <Route path="/Profile" element={<Profile/>}/>
-
     </Routes>
     <Footer/>
       </div>
