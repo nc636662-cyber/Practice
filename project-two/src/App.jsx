@@ -13,7 +13,7 @@ import CounterState from "./Use";
 import Wishlist from "./components/Wishlist";
 import Profile from "./components/Profile";
 import Abc from "./components/Abc";
-import Demmo from "./components/Demmo";
+
 const App = () => {
   return (
   <>
@@ -30,7 +30,7 @@ const App = () => {
       <Route path="/Wishlist" element={<Wishlist/>}/>
       <Route path="/Profile" element={<Profile/>}/>
       <Route path="/abbb" element={<Abc/>}/>
-      <Route path="demmo" element={<Demmo/>}/>
+      
     </Routes>
     <Footer/>
       </div>
