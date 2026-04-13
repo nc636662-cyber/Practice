@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const loadWishlist = () => {
+  try {
+    const data = localStorage.getItem("wishlist");
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+};
 const initialState = {
-  item: []
+  item: loadWishlist()
 };
 
 const Wishlist = createSlice({
@@ -22,6 +29,7 @@ const Wishlist = createSlice({
     // 👉 new item add karo with quantity = 1
     state.item.push({ ...action.payload, quantity: 1 });
   }
+  localStorage.setItem("wishlist", JSON.stringify(state.item));
 },
 
     // ❌ Remove single item
@@ -29,11 +37,13 @@ const Wishlist = createSlice({
       state.item = state.item.filter(
         (item) => item.id !== action.payload
       );
+      localStorage.setItem("wishlist", JSON.stringify(state.item));
     },
 
     // 🧹 Remove all items
     removeall: (state) => {
       state.item = [];
+      localStorage.setItem("wishlist", JSON.stringify(state.item));
     }
 
   }

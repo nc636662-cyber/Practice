@@ -22,6 +22,9 @@ const Navbar = () => {
   const navLinkClass =
     "px-3 py-1 rounded-md hover:text-pink-500 hover:bg-pink-50 transition duration-300 font-medium text-gray-700";
 
+    const count=JSON.parse(localStorage.getItem("wishlist") || "[]");
+    console.log(count.length)
+
   return (
     <nav className="w-full bg-white shadow-md px-4 md:px-6 py-3 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0">
     
@@ -42,9 +45,9 @@ const Navbar = () => {
         <Link to="/Product" className={navLinkClass}>
           Product
         </Link>
-        <Link to="/Cart" className={navLinkClass}>
+        {/* <Link to="/Cart" className={navLinkClass}>
         Cart
-        </Link>
+        </Link> */}
 
 
         {currentUser ? (
@@ -92,10 +95,11 @@ const Navbar = () => {
     My Wishlist
   </Link>
   <Link 
-    to="/wishlist" 
+    to="/Cart" 
     className="px-4 py-2 rounded-md hover:bg-gray-100 transition"
   >
-    My Cart
+    My Cart 
+    <span>{count.length}</span>
   </Link>
   
 </div>

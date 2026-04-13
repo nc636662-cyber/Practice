@@ -6,12 +6,15 @@ import { CartContext } from "./CartContext";
 import { FaDollarSign } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addtowish } from "../slice/cartslice";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 
 const Product = () => {
   const dispatch=useDispatch()
   const [product, setProduct] = useState([]);
   const [visible, setVisible] = useState(10);
+  const [loading,setloading]=useState(true)
 
   const { search } = useContext(SearchContext);
     const{cart,setCart}=useContext(CartContext);
@@ -24,9 +27,12 @@ const Product = () => {
       const res = await fetch("https://dummyjson.com/products");
       const data = await res.json();
       setProduct(data.products);
+     setloading(false)
     };
     fetchProduct();
   }, []);
+  if(loading) return <p className="flex justify-center items-center h-40"><AiOutlineLoading3Quarters  className="text-4xl text-orange-600 animate-spin"/>
+</p>
 
   const filterdata = product.filter((item) =>
     `${item.title} ${item.description}`
@@ -54,14 +60,17 @@ dispatch(addtowish(item))
          <p className="price flex items-center gap-1 text-lg font-medium">Price: <FaDollarSign /> {item.price}
          </p>
 
-
+          <div className="btn-container">
          <button
             className="cart-btn"
             onClick={() =>{ addToCart(item);alert("add item")}}
           >
             Add to Cart
           </button>
-          <button onClick={() => handleClick(item)}>Wish</button>
+          <button 
+          className="wish-btn"
+          onClick={() => handleClick(item)}>Wish</button>
+        </div>
         </div>
       ))}
 
@@ -69,8 +78,10 @@ dispatch(addtowish(item))
         <button onClick={() => setVisible(visible + 4)}>
           Show More
         </button>
+        
       )}
     </div>
+    
   );
 };
 

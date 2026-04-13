@@ -95,3 +95,29 @@
 .product-container > button:hover {
   transform: scale(1.05);
 }
+.btn-container {
+  display: flex;
+  gap: 6px;
+}
+
+.cart-btn,
+.wish-btn {
+  padding: 5px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add to Cart */
+.cart-btn {
+  background: #6c63ff;
+  color: white;
+  border: none;
+}
+
+/* Wish */
+.wish-btn {
+  background: white;
+  color: #333;
+  border: 1px solid #ccc;
+}
