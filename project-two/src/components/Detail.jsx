@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useContext } from "react";
 import { CartContext } from "./CartContext";
-import './Detail.css'
-import { AiFillFastBackward } from "react-icons/ai";
-import { AiFillFastForward } from "react-icons/ai";
-
+import { AiFillFastBackward, AiFillFastForward } from "react-icons/ai";
 
 const Detail = () => {
   const { id } = useParams()
-  console.log("iddddd",typeof(id))
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   const [product, setProduct] = useState(null)
-  const [count, setCount] = useState(1)
   const [loading, setLoading] = useState(true)
-  const{cart,setCart}=useContext(CartContext);
-  const addToCart=(item)=>{
-    setCart([...cart,item]);
+
+  const { cart, setCart } = useContext(CartContext);
+
+  const addToCart = (item) => {
+    setCart([...cart, item]);
   }
 
   useEffect(() => {
@@ -25,8 +21,6 @@ const Detail = () => {
       try {
         const response = await fetch(`https://dummyjson.com/products/${id}`)
         const data = await response.json()
-        console.log("dattaaaa",data)
-
         setProduct(data)
       } catch (error) {
         console.log("Error:", error)
@@ -36,40 +30,80 @@ const Detail = () => {
     }
 
     fetchProduct()
-  },[id])
+  }, [id])
 
   if (loading) {
-    return <h2 className="loading">Loading...</h2>
+    return (
+      <h2 className="text-center text-xl font-semibold mt-10 animate-pulse">
+        Loading...
+      </h2>
+    )
   }
 
   return (
-    <div className="detail-container">
-    
-      <div className="detail-card">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      
+      <div className="bg-white rounded-2xl shadow-lg max-w-4xl w-full grid md:grid-cols-2 gap-6 p-6">
 
-        <img src={product.thumbnail} alt={product.title} />
+        {/* Image */}
+        <div className="flex items-center justify-center">
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className="w-full max-h-80 object-contain rounded-xl"
+          />
+        </div>
 
-        <div className="detail-content">
-          <h2>{product.title}</h2>
-          <p className="desc">{product.description}</p>
-          <p className="price">Price: ${product.price}</p>
+        {/* Content */}
+        <div className="flex flex-col justify-between">
 
-          {/* <div className="quantity">
-            <button onClick={() => count > 1 && setCount(count - 1)}>-</button>
-            {count}
-            <button onClick={() => setCount(count + 1)}>+</button>
-          </div> */}
+          <div>
+            <h2 className="text-2xl font-bold mb-3 text-gray-800">
+              {product.title}
+            </h2>
 
-          <button
-            className="cart-btn"
-            onClick={() =>{ addToCart(product); navigate("/cart"); alert("add item")}}
-          >Add to Cart
-          </button>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              {product.description}
+            </p>
 
-          <div className="nav-buttons">
-          <button onClick={() => navigate(`/detail/${id - 1}`)}> <AiFillFastBackward /></button>
-          <button onClick={() => navigate(`/detail/${Number(id) + 1}`)}><AiFillFastForward /></button>
+            <p className="text-lg font-semibold text-green-600 mb-4">
+              Price: ${product.price}
+            </p>
           </div>
+
+          {/* Buttons */}
+          <div className="space-y-4">
+
+            <button
+              className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+              onClick={() => {
+                addToCart(product);
+                navigate("/cart");
+                alert("Item added");
+              }}
+            >
+              Add to Cart
+            </button>
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between">
+              <button
+                className="bg-gray-200 p-3 rounded-full hover:bg-gray-300 transition"
+                onClick={() => navigate(`/detail/${Number(id) - 1}`)}
+              >
+                <AiFillFastBackward size={20} />
+              </button>
+
+              <button
+                className="bg-gray-200 p-3 rounded-full hover:bg-gray-300 transition"
+                onClick={() => navigate(`/detail/${Number(id) + 1}`)}
+              >
+                <AiFillFastForward size={20} />
+              </button>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>
