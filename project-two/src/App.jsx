@@ -7,7 +7,6 @@ import About from "./components/About";
 import Product from "./components/Product";
 import Footer from './components/Footer';
 import Detail from "./components/Detail";
-import ProtectRouting from "./Protect";
 import Cart from "./components/Cart";
 import CounterState from "./Use";
 import Wishlist from "./components/Wishlist";
