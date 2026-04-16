@@ -1,5 +1,5 @@
 import React from "react";
-import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+import { FaDollarSign } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeall, removetowish } from "../slice/cartslice";
@@ -8,7 +8,7 @@ const Wishlist = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // ✅ Redux se data lo
+
   const wishlist = useSelector((state) => state.Wishl.item);
 
   return (
@@ -18,10 +18,10 @@ const Wishlist = () => {
         My Wishlist
       </h1>
 
-      {/* ❌ Empty case */}
+  
       {wishlist.length === 0 ? (
         <div className="text-center mt-10">
-          <p className="text-gray-500 text-lg">No items in wishlist 😔</p>
+          <p className="text-gray-500 text-lg">No items in wishlist </p>
 
           <button
             onClick={() => navigate("/Product")}
@@ -32,7 +32,7 @@ const Wishlist = () => {
         </div>
       ) : (
         <>
-          {/* 🧹 Clear All */}
+    
           <div className="flex justify-end mb-4">
             <button
               onClick={() => dispatch(removeall())}
@@ -60,26 +60,26 @@ const Wishlist = () => {
                 </p>
 
                 <p className="text-sm text-gray-500">
-                  {item.description?.slice(0, 50)}...
+                  {item.description?.slice(50)}...
                 </p>
 
                 <p className="mt-2 flex items-center justify-center gap-1 text-lg font-semibold">
-                  <RiMoneyRupeeCircleFill />
+                   <FaDollarSign />
                   {item.price}
                 </p>
 
-                {/* 🛒 Order */}
+                
                 <button
                   onClick={() => {
                     alert("Order placed");
-                    // navigate("/Orders");
+                    
                   }}
                   className="mt-3 bg-orange-600 text-white py-2 px-5 rounded-lg hover:bg-orange-500"
                 >
                   Order Now
                 </button>
 
-                {/* ❌ Remove */}
+               
                 <button
                   onClick={() => dispatch(removetowish(item.id))}
                   className="mt-2 bg-gray-200 px-4 py-1 rounded hover:bg-gray-300"

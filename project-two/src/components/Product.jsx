@@ -6,15 +6,15 @@ import { FaDollarSign } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addtowish } from "../slice/cartslice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { IoSearchSharp } from "react-icons/io5";
 
 const Product = () => {
+    const { search, setSearch } = useContext(SearchContext);
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState([]);
   const [visible, setVisible] = useState(10);
   const [loading, setloading] = useState(true);
-
-  const { search } = useContext(SearchContext);
   const { cart, setCart } = useContext(CartContext);
 
   const addToCart = (item) => {
@@ -51,12 +51,33 @@ const Product = () => {
   return (
     <div className="px-4 md:px-10 py-8">
 
-      {/* Title */}
+    
       <h2 className="text-2xl font-bold text-center mb-6">
         Shop Smart Live Better
       </h2>
+      <div className="relative w-full max-w-md">
+  
+  
+  <IoSearchSharp className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 text-lg" />
 
-      {/* Grid */}
+
+  <input
+    type="search"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    placeholder="Search..."
+    className="w-full pl-10 pr-20 py-2 border border-orange-300 rounded-lg outline-none 
+    focus:ring-2 focus:ring-orange-400 focus:border-orange-500"
+  />
+  <button
+    onClick={() => setSearch("")}
+    className="absolute right-2 top-1/2 -translate-y-1/2 text-sm 
+    text-white bg-orange-500 px-3 py-1 rounded-md hover:bg-orange-600 transition "
+  >
+    Clear
+  </button>
+</div>
+    
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
         {filterdata.slice(0, visible).map((item) => (
