@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// load from localStorage
+// load cart
 const loadCart = () => {
   try {
     const data = localStorage.getItem("cart");
@@ -18,14 +18,14 @@ const CartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-  
+    // ADD
     addToCart: (state, action) => {
-      const existItem = state.item.find(
-        (item) => item.id === action.payload.id
+      const exist = state.item.find(
+        (i) => i.id === action.payload.id
       );
 
-      if (existItem) {
-        existItem.quantity += 1;
+      if (exist) {
+        exist.quantity += 1;
       } else {
         state.item.push({ ...action.payload, quantity: 1 });
       }
@@ -33,33 +33,49 @@ const CartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.item));
     },
 
-  
+    // REMOVE
     removeFromCart: (state, action) => {
       state.item = state.item.filter(
-        (item) => item.id !== action.payload
+        (i) => i.id !== action.payload
       );
       localStorage.setItem("cart", JSON.stringify(state.item));
     },
 
-  
-    clearCart: (state) => {
-      state.item = [];
-      localStorage.setItem("cart", JSON.stringify(state.item));
-    },
-
-  
+    // ORDER PLACE
     placeOrder: (state) => {
+      const oldOrders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+      const newOrder = {
+        id: Date.now(),
+        items: state.item,
+        total: state.item.reduce(
+          (t, item) => t + item.price * item.quantity,
+          0
+        ),
+        date: new Date().toLocaleString()
+      };
+
+      localStorage.setItem(
+        "orders",
+        JSON.stringify([...oldOrders, newOrder])
+      );
+
+      // clear cart
       state.item = [];
       localStorage.setItem("cart", JSON.stringify(state.item));
     }
   }
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  clearCart,
-  placeOrder
-} = CartSlice.actions;
+// total selector
+export const selectTotalPrice = (state) =>
+  state.cart.item.reduce(
+    (t, item) => t + item.price * item.quantity,
+    0
+  );
+
+export const { addToCart, removeFromCart, placeOrder } =
+  CartSlice.actions;
 
 export default CartSlice.reducer;

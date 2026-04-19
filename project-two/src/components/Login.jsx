@@ -20,7 +20,6 @@ const Login = () => {
 
   const handlechange = (e) => {
     const { name, value } = e.target;
-
     setformdata((prev) => ({
       ...prev,
       [name]: value
@@ -32,150 +31,121 @@ const Login = () => {
 
     const { firstname, lastname, email, password, confirmPassword } = formdata;
 
-    // LOGIN
+    // 🔐 LOGIN
     if (login) {
-      if (!email || !password) {
-        alert("Email and Password required");
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const user = users.find(
+        (u) => u.email === email && u.password === password
+      );
+
+      if (!user) {
+        alert("Invalid credentials ❌");
         return;
       }
 
-      const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-      const existingUser = savedUsers.find(
-        (user) => user.email === email && user.password === password
-      );
-
-      if (existingUser) {
-        alert("Login success");
-        localStorage.setItem("currentuser", JSON.stringify(existingUser));
-        navigate("/");
-      } else {
-        alert("Invalid credentials");
-      }
+      localStorage.setItem("currentuser", JSON.stringify(user));
+      alert("Login Successful ✅");
+      navigate("/profile");
       return;
     }
 
-    // SIGNUP
+    // 🆕 SIGNUP
     if (!firstname || !lastname || !email || !password || !confirmPassword) {
-      alert("All fields are required");
+      alert("All fields required ❌");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      alert("Passwords do not match ❌");
       return;
     }
 
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const emailExists = existingUsers.some((user) => user.email === email);
-    if (emailExists) {
-      alert("Email already registered");
+    const exist = users.find((u) => u.email === email);
+    if (exist) {
+      alert("User already exists ❌");
       return;
     }
 
-    existingUsers.push({ firstname, lastname, email, password });
-    localStorage.setItem("users", JSON.stringify(existingUsers));
+    const newUser = { firstname, lastname, email, password };
 
-    alert("Signup successful");
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
 
-    setLogin(true);
+    // ✅ auto login
+    localStorage.setItem("currentuser", JSON.stringify(newUser));
 
-    setformdata({
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+    alert("Signup Successful ✅");
+    navigate("/profile");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 px-4">
-
+    <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full max-w-md p-8 rounded-3xl shadow-xl space-y-4 transition-all duration-300"
+        className="bg-white p-6 rounded-xl w-96 space-y-3"
       >
-
-        <h1 className="text-3xl font-bold text-center text-gray-800">
-          {login ? "Welcome Back " : "Create Account "}
+        <h1 className="text-2xl font-bold text-center">
+          {login ? "Login" : "Signup"}
         </h1>
 
-        {/* Signup Fields */}
         {!login && (
-          <div className="grid grid-cols-2 gap-3">
+          <>
             <input
-              type="text"
               name="firstname"
               placeholder="First Name"
-              value={formdata.firstname}
               onChange={handlechange}
-              className="p-2 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+              className="w-full p-2 border"
             />
-
             <input
-              type="text"
               name="lastname"
               placeholder="Last Name"
-              value={formdata.lastname}
               onChange={handlechange}
-              className="p-2 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+              className="w-full p-2 border"
             />
-          </div>
+          </>
         )}
 
-        {/* Email */}
         <input
-          type="email"
           name="email"
-          placeholder="Enter Email"
-          value={formdata.email}
+          placeholder="Email"
           onChange={handlechange}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+          className="w-full p-2 border"
         />
 
-        {/* Password */}
         <input
           type="password"
           name="password"
-          placeholder="Enter Password"
-          value={formdata.password}
+          placeholder="Password"
           onChange={handlechange}
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+          className="w-full p-2 border"
         />
 
-        {/* Confirm Password */}
         {!login && (
           <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            value={formdata.confirmPassword}
             onChange={handlechange}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            className="w-full p-2 border"
           />
         )}
 
-        {/* Button */}
-        <button
-          type="submit"
-          className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 active:scale-95 transition"
-        >
+        <button className="w-full bg-green-500 text-white p-2">
           {login ? "Login" : "Signup"}
         </button>
 
-        {/* Toggle */}
-        <p className="text-center text-sm text-gray-500">
-          {login ? "Don't have an account?" : "Already have an account?"}
+        <p className="text-center text-sm">
+          {login ? "No account?" : "Already have account?"}
           <span
             onClick={handleclick}
-            className="ml-1 text-green-500 font-semibold cursor-pointer hover:underline"
+            className="text-blue-500 ml-1 cursor-pointer"
           >
             {login ? "Signup" : "Login"}
           </span>
         </p>
-
       </form>
     </div>
   );
