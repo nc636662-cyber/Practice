@@ -4,7 +4,7 @@ import { SearchContext } from "../SearchContext";
 import { CartContext } from "./CartContext";
 import { FaDollarSign } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { addtowish } from "../slice/cartslice";
+import { addtowish } from "../slice/whishListSlice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoSearchSharp } from "react-icons/io5";
 

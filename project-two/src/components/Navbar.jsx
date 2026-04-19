@@ -11,6 +11,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("currentuser");
+    setOpen(false);
     navigate("/Signup");
   };
 
@@ -20,26 +21,23 @@ const Navbar = () => {
   const count = JSON.parse(localStorage.getItem("wishlist") || "[]");
 
   return (
-    <nav className="w-full bg-white shadow-md px-4 md:px-6 py-3 flex items-center justify-between relative">
+    <nav className="w-full bg-white shadow-md px-4 md:px-6 py-3 flex items-center justify-between">
 
-  
+      {/* Logo */}
       <Link to="/" className="flex items-center gap-2">
         <span className="text-xl font-bold text-pink-500 flex items-center gap-2">
           <MdOutlineShoppingCart /> ShopX
         </span>
       </Link>
 
-      
+      {/* Nav Links */}
       <div className="hidden md:flex items-center gap-6">
         <Link to="/" className={navLinkClass}>Home</Link>
         <Link to="/About" className={navLinkClass}>About</Link>
         <Link to="/Product" className={navLinkClass}>Product</Link>
 
         {currentUser ? (
-          <button
-            onClick={handleLogout}
-            className={`${navLinkClass} cursor-pointer`}
-          >
+          <button onClick={handleLogout} className={navLinkClass}>
             Logout
           </button>
         ) : (
@@ -49,17 +47,16 @@ const Navbar = () => {
         )}
       </div>
 
-    
-      <div className="flex items-center gap-4 relative">
+      {/* Right Section */}
+      <div className="relative flex items-center">
 
-    
+        {/* Three Dots */}
         <button
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen(true)}
           className="relative text-2xl text-gray-700"
         >
           <BsThreeDotsVertical />
 
-          
           {count.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
               {count.length}
@@ -67,13 +64,15 @@ const Navbar = () => {
           )}
         </button>
 
-        
+        {/* Dropdown */}
         {open && (
-          <div className="absolute right-0 top-10 w-44 bg-white rounded-xl shadow-lg border p-2 flex flex-col gap-1 z-50">
-
+          <div
+            className="absolute right-0 top-10 w-44 bg-white rounded-xl shadow-lg border p-2 flex flex-col gap-1 z-50"
+            onMouseLeave={() => setOpen(false)} // 👈 close when mouse leaves dropdown
+          >
             <Link
               to="/profile"
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition"
+              className="px-4 py-2 hover:bg-gray-100 rounded-md"
               onClick={() => setOpen(false)}
             >
               My Profile
@@ -81,7 +80,7 @@ const Navbar = () => {
 
             <Link
               to="/wishlist"
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition"
+              className="px-4 py-2 hover:bg-gray-100 rounded-md"
               onClick={() => setOpen(false)}
             >
               My Wishlist
@@ -89,12 +88,11 @@ const Navbar = () => {
 
             <Link
               to="/Cart"
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition"
+              className="px-4 py-2 hover:bg-gray-100 rounded-md"
               onClick={() => setOpen(false)}
             >
               My Cart
             </Link>
-
           </div>
         )}
       </div>

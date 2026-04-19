@@ -1,55 +1,65 @@
 import { createSlice } from "@reduxjs/toolkit";
-const loadWishlist = () => {
+
+// load from localStorage
+const loadCart = () => {
   try {
-    const data = localStorage.getItem("wishlist");
+    const data = localStorage.getItem("cart");
     return data ? JSON.parse(data) : [];
   } catch {
     return [];
   }
 };
+
 const initialState = {
-  item: loadWishlist()
+  item: loadCart()
 };
 
-const Wishlist = createSlice({
-  name: "Wishl",
+const CartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
-
-    addtowish: (state, action) => {
-  const existItem = state.item.find(
-    (item) => item.id === action.payload.id
-  );
-
-  if (existItem) {
-   
-    existItem.quantity += 1;
-  } else {
-    
-    state.item.push({ ...action.payload, quantity: 1 });
-  }
-  localStorage.setItem("wishlist", JSON.stringify(state.item));
-},
-
   
-    removetowish: (state, action) => {
-      state.item = state.item.filter(
-        (item) => item.id !== action.payload
+    addToCart: (state, action) => {
+      const existItem = state.item.find(
+        (item) => item.id === action.payload.id
       );
-      localStorage.setItem("wishlist", JSON.stringify(state.item));
+
+      if (existItem) {
+        existItem.quantity += 1;
+      } else {
+        state.item.push({ ...action.payload, quantity: 1 });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(state.item));
     },
 
   
-    removeall: (state) => {
-      state.item = [];
-      localStorage.setItem("wishlist", JSON.stringify(state.item));
-    }
+    removeFromCart: (state, action) => {
+      state.item = state.item.filter(
+        (item) => item.id !== action.payload
+      );
+      localStorage.setItem("cart", JSON.stringify(state.item));
+    },
 
+  
+    clearCart: (state) => {
+      state.item = [];
+      localStorage.setItem("cart", JSON.stringify(state.item));
+    },
+
+  
+    placeOrder: (state) => {
+      state.item = [];
+      localStorage.setItem("cart", JSON.stringify(state.item));
+    }
   }
 });
 
+export const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  placeOrder
+} = CartSlice.actions;
 
-export const { addtowish, removetowish, removeall } = Wishlist.actions;
-
-
-export default Wishlist.reducer;
+export default CartSlice.reducer;

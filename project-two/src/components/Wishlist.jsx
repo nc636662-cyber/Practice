@@ -2,7 +2,7 @@ import React from "react";
 import { FaDollarSign } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeall, removetowish } from "../slice/cartslice";
+import { removeall, removetowish } from "../slice/whishListSlice";
 
 const Wishlist = () => {
   const navigate = useNavigate();

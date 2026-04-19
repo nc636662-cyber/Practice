@@ -11,8 +11,8 @@ const initialState = {
   item: loadWishlist()
 };
 
-const Cart = createSlice({
-  name: "cart",
+const Wishlist = createSlice({
+  name: "Wishl",
   initialState,
   reducers: {
 
@@ -22,16 +22,16 @@ const Cart = createSlice({
   );
 
   if (existItem) {
-  
+   
     existItem.quantity += 1;
   } else {
-  
+    
     state.item.push({ ...action.payload, quantity: 1 });
   }
-  
-   localStorage.setItem("wishlist", JSON.stringify(state.item));
+  localStorage.setItem("wishlist", JSON.stringify(state.item));
 },
 
+  
     removetowish: (state, action) => {
       state.item = state.item.filter(
         (item) => item.id !== action.payload
@@ -39,14 +39,17 @@ const Cart = createSlice({
       localStorage.setItem("wishlist", JSON.stringify(state.item));
     },
 
+  
     removeall: (state) => {
       state.item = [];
-        localStorage.setItem("wishlist", JSON.stringify(state.item));
+      localStorage.setItem("wishlist", JSON.stringify(state.item));
     }
 
   }
 });
 
-export const { addtowish, removetowish, removeall } = Cart.actions;
 
-export default Cart.reducer;
+export const { addtowish, removetowish, removeall } = Wishlist.actions;
+
+
+export default Wishlist.reducer;
