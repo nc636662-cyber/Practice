@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 import CounterState from "./Use";
 import Wishlist from "./components/Wishlist";
 import Profile from "./components/Profile";
+import Orders from "./components/Orders";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
       <Route path="/count" element={<CounterState/>}/>
       <Route path="/Wishlist" element={<Wishlist/>}/>
       <Route path="/Profile" element={<Profile/>}/>
+      <Route path="/Orders" element={<Orders/>}/>
       
       
     </Routes>

@@ -6,12 +6,12 @@ const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  // ✅ total price
+
   const totalPrice = cart.reduce((total, item) => {
     return total + item.price;
   }, 0);
 
-  // ✅ place order
+
   const handleOrder = () => {
     if (cart.length === 0) {
       alert("Cart is empty ❌");
@@ -33,7 +33,7 @@ const Cart = () => {
       JSON.stringify([...existingOrders, newOrder])
     );
 
-    // clear cart
+    
     setCart([]);
 
     alert("✅ Order placed successfully!");
@@ -69,12 +69,12 @@ const Cart = () => {
         ))}
       </div>
 
-      {/* ✅ Total Price */}
+  
       <h2 className="text-xl font-bold text-center mt-6">
         Total Price: ₹{totalPrice}
       </h2>
 
-      {/* ✅ Order Button */}
+  
       <div className="flex justify-center">
         <button
           onClick={handleOrder}

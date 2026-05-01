@@ -19,18 +19,6 @@ const navigate=useNavigate();  return (
 
         <div>
           <h3 className="text-lg font-semibold mb-3 text-white">
-            Categories
-          </h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-pink-400 cursor-pointer">Makeup</li>
-            <li className="hover:text-pink-400 cursor-pointer">Skin Care</li>
-            <li className="hover:text-pink-400 cursor-pointer">Hair Care</li>
-            <li className="hover:text-pink-400 cursor-pointer">Fragrances</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-3 text-white">
             Customer Support
           </h3>
           <ul className="space-y-2 text-sm">
