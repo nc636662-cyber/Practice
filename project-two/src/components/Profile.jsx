@@ -17,15 +17,14 @@ const Profile = () => {
   }, []);
 
   if (!user) {
-    return <h2 className="text-center mt-10">Please Login First ❌</h2>;
+    return <h2 className="text-center mt-10">Please Login First </h2>;
   }
 
-  // Open file picker manually
+
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
 
-  // Handle image upload
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -46,7 +45,6 @@ const Profile = () => {
     }
   };
 
-  // Remove image
   const handleRemoveImage = () => {
     const updatedUser = {
       ...user,
@@ -67,7 +65,7 @@ const Profile = () => {
     <div className="p-5 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">My Profile</h1>
 
-      {/* Image Box */}
+     
       <div
         onClick={handleImageClick}
         className="w-32 h-32 rounded-full border cursor-pointer overflow-hidden flex items-center justify-center bg-gray-100 hover:opacity-80"
@@ -83,7 +81,6 @@ const Profile = () => {
         )}
       </div>
 
-      {/* Hidden Input */}
       <input
         type="file"
         ref={fileInputRef}
@@ -91,7 +88,6 @@ const Profile = () => {
         className="hidden"
       />
 
-      {/* Remove Button */}
       {image && (
         <button
           onClick={handleRemoveImage}
@@ -101,13 +97,13 @@ const Profile = () => {
         </button>
       )}
 
-      {/* User Info */}
+    
       <div className="border p-4 rounded shadow w-full max-w-md text-center mt-4">
         <p><b>Name:</b> {user.firstname} {user.lastname}</p>
         <p><b>Email:</b> {user.email}</p>
       </div>
 
-      {/* Logout */}
+      
       <button
         onClick={handleLogout}
         className="bg-red-500 text-white px-4 py-2 mt-4 rounded"
